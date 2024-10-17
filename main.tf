@@ -10,7 +10,7 @@ locals {
 
   # Note: This doesn't work for PostgreSQL 9, since each "minor" version is actually a major version
   # Luckily we don't have any services using this module with databases on PG 9 or below.
-  major_engine_version = split(".", var.engine_version)[0]
+  major_engine_version = "15"
   // managed-postgres-<engine version> is defined in commmon/terraform/code/parameter_groups.tf
   default_parameter_group = "managed-postgres-${local.major_engine_version}"
   parameter_group         = var.parameter_group != "" ? var.parameter_group : local.default_parameter_group
@@ -30,7 +30,7 @@ resource "aws_db_instance" "db" {
   allocated_storage     = var.storage
   max_allocated_storage = var.max_storage
   engine                = "postgres"
-  engine_version        = var.engine_version
+  engine_version        = "15.0"
   backup_window         = var.backup_window
   maintenance_window    = var.maintenance_window
   parameter_group_name  = local.parameter_group
