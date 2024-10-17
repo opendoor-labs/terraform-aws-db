@@ -18,12 +18,6 @@ locals {
   identifier = "${local.app}-${var.env}${var.identifier_suffix}"
 }
 
-module "ownership" {
-  source = "./ownership"
-
-  service_key = local.app
-}
-
 resource "random_string" "password" {
   length  = var.password_length
   special = false
@@ -88,8 +82,6 @@ resource "aws_db_instance" "db" {
   tags = merge(var.custom_tags, {
     app = local.app
     # If the ownership module returns null for these values, the tags won't be included at all.
-    team        = module.ownership.team
-    org         = module.ownership.org
     env         = var.env
     sox_related = var.sox_related
   })
