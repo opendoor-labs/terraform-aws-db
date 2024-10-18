@@ -36,7 +36,7 @@ resource "aws_db_instance" "db" {
   parameter_group_name  = local.parameter_group
   username              = var.username
   ca_cert_identifier    = "rds-ca-rsa2048-g1"
-  name                  = local.database_name
+  db_name               = local.database_name
   publicly_accessible   = var.publicly_accessible
   # Note: Staging and Production should have distinct security groups, but currently share one.
   vpc_security_group_ids = concat(var.security_groups, local.is_production ? var.prod_security_groups : var.staging_security_groups, var.additional_security_groups)
